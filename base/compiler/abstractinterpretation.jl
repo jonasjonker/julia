@@ -1380,6 +1380,12 @@ function abstract_eval_special_value(interp::AbstractInterpreter, @nospecialize(
         return (vtypes[slot_id(e)]::VarState).typ
     elseif isa(e, GlobalRef)
         return abstract_eval_global(e.mod, e.name)
+    elseif isa(e, PhiNode)
+        rt = Union{}
+        for val in e.values
+            rt = tmerge(rt, abstract_eval_special_value(interp, val, vtypes, sv))
+        end
+        return rt
     end
 
     return Const(e)
