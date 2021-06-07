@@ -388,6 +388,7 @@ seed!(rng::_GLOBAL_RNG, ::Nothing) = seed!(rng)  # to resolve ambiguity
 seed!(seed::Union{Integer,Vector{UInt32},Vector{UInt64},NTuple{4,UInt64}}) = seed!(GLOBAL_RNG, seed)
 
 rng_native_52(::_GLOBAL_RNG) = rng_native_52(default_rng())
+rand(::_GLOBAL_RNG) = rand(default_rng())
 rand(::_GLOBAL_RNG, sp::SamplerBoolBitInteger) = rand(default_rng(), sp)
 for T in (:(SamplerTrivial{UInt52Raw{UInt64}}),
           :(SamplerTrivial{UInt2x52Raw{UInt128}}),
