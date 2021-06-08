@@ -43,6 +43,9 @@ static jl_sym_t *jl_demangle_typename(jl_sym_t *s) JL_NOTSAFEPOINT
 JL_DLLEXPORT jl_methtable_t *jl_new_method_table(jl_sym_t *name, jl_module_t *module)
 {
     jl_task_t *ct = jl_current_task;
+    if (ct->ptls->in_pure_callback)
+        jl_error("@MethodTable cannot be used in a generated function");
+    jl_check_open_for(module, "@MethodTable");
     jl_methtable_t *mt =
         (jl_methtable_t*)jl_gc_alloc(ct->ptls, sizeof(jl_methtable_t),
                                      jl_methtable_type);

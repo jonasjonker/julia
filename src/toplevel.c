@@ -895,7 +895,7 @@ JL_DLLEXPORT jl_value_t *jl_toplevel_eval(jl_module_t *m, jl_value_t *v)
 }
 
 // Check module `m` is open for `eval/include`, or throw an error.
-static void jl_check_open_for(jl_module_t *m, const char* funcname)
+void jl_check_open_for(jl_module_t *m, const char *funcname)
 {
     if (jl_options.incremental && jl_generating_output()) {
         if (m != jl_main_module) { // TODO: this was grand-fathered in
